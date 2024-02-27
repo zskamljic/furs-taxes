@@ -1,0 +1,30 @@
+{
+    "AAPL": [
+        "US0378331005",
+        "Apple"
+    ],
+    "APA": [
+        "US037411AW56",
+        "Apache Corp."
+    ],
+    "INTC": [
+        "US4581401001",
+        "Intel Corp."
+    ],
+    "KO": [
+        "US1912161007",
+        "Coca Cola Co."
+    ],
+    "MSFT": [
+        "US5949181045",
+        "Microsoft Corp."
+    ],
+    "NVDA": [
+        "US67066G1040",
+        "NVIDIA Corp."
+    ],
+    "T": [
+        "US00206R1023",
+        "AT&T"
+    ]
+}
