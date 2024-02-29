@@ -57,6 +57,7 @@ fn main() -> Result<()> {
 
     let mut args = env::args();
     let mut dividends = vec![];
+    args.next();
     let revolut = args.next().unwrap();
     let revolut_dividends = load_revolut_dividends(&places, &rates, &revolut)?;
     dividends.extend(revolut_dividends);
