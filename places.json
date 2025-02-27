@@ -250,5 +250,41 @@
     "DVN": [
         "Oklahoma City, 333 West Sheridan Avenue, United States",
         "US"
+    ],
+    "GOOG": [
+        "1600 Amphitheatre Parkway, Mountain View, California, 94043",
+        "US"
+    ],
+    "GOOGL": [
+        "1600 Amphitheatre Parkway, Mountain View, California, 94043",
+        "US"
+    ],
+    "GOOD": [
+        "6901 N Holmes St, Gladstone, MO 64118, United States",
+        "US"
+    ],
+    "BLK": [
+        "50 Hudson Yards, New York, United States",
+        "US"
+    ],
+    "SLB": [
+        "5599 San Felipe St Fl 17, Houston, Texas, 77056-2790",
+        "US"
+    ],
+    "CSCO": [
+        "170 West Tasman Dr. San Jose, CA 95134",
+        "US"
+    ],
+    "TD": [
+        "Toronto-Dominion Centre, 66 Wellington St W Tower, 22nd, Toronto, Canada",
+        "CA"
+    ],
+    "BMY": [
+        "Princeton, New Jersey, U.S.",
+        "US"
+    ],
+    "DIS": [
+       "500 S Buena Vista St, United States",
+       "US" 
     ]
 }

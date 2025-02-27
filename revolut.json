@@ -30,5 +30,17 @@
     "DVN": [
         "US25179M1036",
         "Devon Energy Corp."
+    ],
+    "GOOG": [
+        "US02079K1079",
+        "Alphabet Inc"
+    ],
+    "GOOGL": [
+        "US02079K3059",
+        "Alphabet Inc"
+    ],
+    "DIS": [
+        "US2546871060",
+        "The Walt Disney Co"
     ]
 }

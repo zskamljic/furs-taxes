@@ -4,6 +4,7 @@ use std::{
     fs::{read_to_string, File},
     io::{self, BufReader, Write},
 };
+use chrono::{NaiveDate, Duration, Datelike};
 
 use anyhow::Result;
 use csv::Reader;
@@ -41,7 +42,12 @@ struct Rate {
     rate: f32,
 }
 
+fn setup_log_level() {
+    std::env::set_var("RUST_LOG", "INFO");
+}
+
 fn main() -> Result<()> {
+    setup_log_level();
     env_logger::init();
 
     let stdin = io::stdin();
@@ -62,6 +68,7 @@ fn main() -> Result<()> {
     let revolut_dividends = load_revolut_dividends(&places, &rates, &revolut)?;
     dividends.extend(revolut_dividends);
     if let Some(t212) = args.next() {
+        log::info!("Found T212, extending...");
         let t212_dividends = load_t212_dividends(&places, &rates, &t212)?;
         dividends.extend(t212_dividends);
     }
@@ -113,7 +120,7 @@ fn load_t212_dividends(
     let mut dividends = vec![];
     for record in reader.records() {
         let record = record?;
-        if record.get(headers["Action"]) != Some("Dividend (Ordinary)") {
+        if record.get(headers["Action"]) != Some("Dividend (Dividend)") {
             continue;
         }
 
@@ -164,6 +171,7 @@ fn load_t212_dividends(
             tax,
         });
     }
+    log::info!("Found {} dividends from T212", dividends.len());
     Ok(dividends)
 }
 
@@ -299,13 +307,30 @@ fn convert_value(
     }
 
     let date = date.split(&[' ', 'T']).next()?;
-    let date_rate = match rates.get(date) {
-        Some(value) => value,
-        None => {
-            println!("Did not find currency entry for {date}");
-            return None;
-        }
-    };
-    let rate = date_rate.get(currency)?;
+    let rate = find_last_date(rates, date, currency);
     Some(format!("{:.2}", tax * rate).replacen('.', ",", 1))
+}
+
+fn find_last_date(
+    rates: &HashMap<String, HashMap<String, f32>>, 
+    date: &str,
+    currency: &str,
+) -> f32 {
+    let mut current_date = NaiveDate::parse_from_str(date, "%Y-%m-%d").ok().expect("Was not valid date");
+
+    loop {
+        let date_str = current_date.format("%Y-%m-%d").to_string();
+        if let Some(ref date_rate) = rates.get(&date_str) {
+            if let Some(rate) = date_rate.get(currency) {
+                return *rate;
+            }
+        }
+        current_date -= Duration::days(1);
+        if current_date.year() < 2024 {
+            break;
+        }
+    }
+
+    log::info!("Did not find currency entry for {date}");
+    1.0
 }
